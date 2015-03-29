@@ -1,0 +1,32 @@
+<!DOCTYPE html>{% load static from staticfiles %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="José Ismael Jiménez Ortiz">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  {% block pre_style %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_style %}{% endblock %}
+  <!-- <script type="text/javascript" src=% static js/jquery-1.11.1.min.js %></script> -->
+  {% block extra_head %}{% endblock %}
+</head>
+<!-- Body -->
+<body class="{% block body-class %}{% endblock %}">
+    <div class="header{% block header-class %}{% endblock %}">{% block header %}{% endblock %}</div>
+    <div class="toolbar{% block toolbar-class %}{% endblock %}">
+        {% block toolbar %}
+            <a href=""></a>
+        {% endblock %}
+    </div>
+    <div class="content{% block content-class %}{% endblock %}">{% block content %}{% endblock %}</div>
+</body>
+<!-- Footer -->
+    <footer>
+        <div class="container-info{% block container-info-class %}{% endblock %}">{% block container-info %}{% endblock %}</div>
+        <div class="extra-container{% block extra-container-class %}{% endblock %}">{% block extra-container %}{% endblock %}</div>
+    </footer>
+</html>

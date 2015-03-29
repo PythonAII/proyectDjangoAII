@@ -1,0 +1,10 @@
+Django==1.4.7
+argparse==1.2.1
+South==0.7.6
+setuptools==5.1
+pip
+pattern
+Whoosh
+beautifulsoup4
+psycopg2==2.4.4
+Pillow
