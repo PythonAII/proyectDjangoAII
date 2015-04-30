@@ -26,12 +26,12 @@ $ source /usr/local/bin/virtualenvwrapper.sh
 Crear virtualenv con pycharm nombrandolo AII luego iniciar terminal
 $ workon AII
 ir a la carpeta de projecto
-(AII)$ sudo pip install -r AIIWeb/requeriments.txt
+(AII)$ pip install -r AIIWeb/requeriments.txt
 -En caso de fallo de psycopg2:
 	$ sudo apt-get install -y postgis postgresql-9.3-postgis-2.1
 	$ sudo apt-get install libpq-dev python-dev
 Volver a ejecutar:
-(AII)$ sudo pip install -r AIIWeb/requeriments.txt
+(AII)$ pip install -r AIIWeb/requeriments.txt
 
 (AII)$ echo export DJANGO_SETTINGS_MODULE=AIIWeb.settings.dev >> $VIRTUAL_ENV/bin/postactivate
 (AII)$ echo unset DJANGO_SETTINGS_MODULE >> $VIRTUAL_ENV/bin/postdeactivate
