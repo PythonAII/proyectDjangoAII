@@ -5,6 +5,7 @@ sudo apt-get install postgresql postgresql-contrib
 
 
 sudo -i -u postgres
+
 $ createuser aii -d -R -S -P  # use "aii" password
 $ createdb dbaii -O aii -E utf8
 
