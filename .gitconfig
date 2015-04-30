@@ -1,0 +1,44 @@
+[user]
+	name = Jose Ismael
+	email = ismaeljimenezortiz@gmail.com
+
+[core]
+    excludesfile = /home/ismael/.gitignore
+    pager = "/usr/bin/less -RciqMSj5"
+
+[color]
+    diff = auto
+    branch = auto
+    status = auto
+	sh = auto
+    ui = auto
+
+[diff]
+    renames = true
+	mnemonicprefix = true
+
+[alias]
+    st = status
+    d = diff
+    dc = diff --cached
+    ci = commit -v
+    cia = commit -v -a
+    co = checkout
+    cp = cherry-pick
+    l = log
+    ll = log -p
+    lm = log master..
+    llm = log -p master..
+    b = branch
+    rb = rebase
+	sh = !git-sh
+
+[branch]
+	autosetuprebase = always
+	autosetupmerge = true
+
+[push]
+	default = simple
+
+[rerere]
+	enabled = true
