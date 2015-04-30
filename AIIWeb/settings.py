@@ -26,6 +26,10 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ADMINS = (
+    ('Ismael Jimenez', 'ismael_jimenez_ortiz@msn.com'),
+    ('Raul Leal', 'luzxor@hotmail.com')
+)
 
 # Application definition
 
@@ -36,10 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     'south',
     'AiiWebs',
     'common',
+    'product',
 )
 
 MIDDLEWARE_CLASSES = (

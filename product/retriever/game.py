@@ -21,7 +21,7 @@ class GameShopRetriever(ProductRetriever):
         self.__parse_product_info(product_info)
         self.__parse_description(soup.find('div', id='ficha-texto-descripcion'))
         self.__parse_imgs(soup.find('div', id='ctl00_CPH_Body_Master_CoverFlow1_tn_list'))
-        return product_info, imgs
+        return self.product_info, None
 
     def __parse_product_info(self, product_info):
         self.product_info['title'] = product_info.find('span', id='ctl00_CPH_Body_Master_lbl_name')
