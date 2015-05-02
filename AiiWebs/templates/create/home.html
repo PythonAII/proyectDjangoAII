@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content-class %}Juanoider love Tania{% endblock %}
+{% block content %}
+    <div id="div_form_admin">
+
+            <form id="create_products" action="{% url form_create_product %}" method="post">{% csrf_token %}
+                {% include 'create/show_error.html' %}
+                <div class="multiurls_form">{{ get_urls_products }}</div>
+                <input type="submit" value="Ejecutar">
+            </form>
+
+    </div>
+{% endblock %}
