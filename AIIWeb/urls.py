@@ -4,9 +4,11 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns('AiiWebs.views',
     # Examples:
-    url(r'^$', 'AiiWebs.views.home', name='home'),
+    url(r'^$', 'home', name='home'),
+    url(r'^create/$', 'admin', name='create'),
+    url(r'^create/report/$', 'function_in_view', name='form_create_product'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
