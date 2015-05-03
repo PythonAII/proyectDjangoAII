@@ -1,0 +1,9 @@
+##########
+##PYTHON##
+##########
+
+#Compile
+*.pyc
+
+#Folder
+.idea/

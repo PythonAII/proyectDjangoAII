@@ -1,5 +1,5 @@
-__author__ = 'ismael'
 import threading
+
 
 def create_product(url):
     from product.retriever import registry
