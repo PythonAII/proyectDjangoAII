@@ -1,7 +1,7 @@
 __author__ = 'ismael'
 
 from bs4 import BeautifulSoup
-from ..base import ProductRetriever
+from ...base import ProductRetriever
 
 TAGS = [('code', 'sku'), ('publisher', 'publisher'), ('genero', 'genre'),
         ('date', 'releaseDate'), ('stock', 'availability')]
@@ -10,9 +10,6 @@ PRICESTAGS = ['PriceInt', 'NoPrice']
 
 
 class GameShopRetriever(ProductRetriever):
-
-    def __init__(self):
-        self.product_info = {}
 
     def _parse_detail_url(self, response, url, **kwargs):
         soup = BeautifulSoup(response.body_as_unicode())

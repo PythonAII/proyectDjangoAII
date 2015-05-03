@@ -1,20 +1,40 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from choice import FORMAT_CHOICE, CONSOLE_CHOICE, CATEGORY_CHOICE
 from util import upload_image_game, upload_image_brand
-from product.base import ProductRetrieverUrl
 
 
 # Create your models here.
+class ShopQuerySet(models.query.QuerySet):
+    def shops(self):
+        return self.exclude(active=False)
+
+    def get_shop(self, name):
+        return self.shops.filter(name=name)
+
+
+class ShopManager(models.Manager):
+
+    def __getattr__(self, attr, *args):
+        try:
+            return getattr(self.__class__, attr, *args)
+        except AttributeError:
+            return getattr(self.get_query_set(), attr, *args)
+
+    def get_query_set(self):
+        return ShopQuerySet(self.model)
+
+
 class Shop(models.Model):
 
     name = models.CharField(max_length=100, verbose_name=_(u'Nombre'))
     description = models.TextField(max_length=400, verbose_name=_(u'Descipción'))
     url = models.TextField(max_length=700, verbose_name=_(u'Url'))
     activate = models.BooleanField(verbose_name=_(u'Activado'))
+
+    objects = ShopManager()
 
     def __init__(self, *args, **kwargs):
         super(Shop, self).__init__(*args, **kwargs)
