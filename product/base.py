@@ -1,6 +1,7 @@
 __author__ = 'ismael'
 
 import re
+from util import get_domain
 from decimal import Decimal
 from bs4 import BeautifulSoup
 
@@ -9,7 +10,10 @@ class ProductRetriever(object):
 
     def __init__(self, url, response):
         self.url = url
-        self.product_info = {}
+        self.product_info = {
+            'shop': get_domain(url),
+            'url': url,
+        }
         self.soup = BeautifulSoup(response)
 
     def _parse_price(self, texts):

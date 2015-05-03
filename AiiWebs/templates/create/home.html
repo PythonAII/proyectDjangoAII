@@ -12,12 +12,18 @@
         <div id="show">
         {% for product in products %}
             {% with data=product.product %}
+            <div class="url">
+                <div>{{ data.url }}</div>
+            </div>
             <div class="title">
                 <div>{{ data.title }}</div>
             </div>
             <img title="{{ data.title }}" src="{{ data.src }}">
             <div class="category">
                 <div>{{ data.genero }}</div>
+            </div>
+            <div class="shop">
+                <div>{{ data.shop }}</div>
             </div>
             <div class="date">
                 <div>{{ data.date }}</div>
