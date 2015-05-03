@@ -39,4 +39,4 @@ Volver a ejecutar:
 
 (AII)$ python manage.py syncdb
 (AII)$ python manage.py migrate
----------------------------------------
+-----------------------------------
