@@ -2,12 +2,38 @@
 {% block content-class %}Juanoider love Tania{% endblock %}
 {% block content %}
     <div id="div_form_admin">
-
-            <form id="create_products" action="{% url form_create_product %}" method="get">{% csrf_token %}
-                {% include 'create/show_error.html' %}
-                <div class="multiurls_form">{{ get_urls_products }}</div>
-                <input type="submit" value="Ejecutar">
-            </form>
-
+        <form id="create_products" action="{% url form_create_product %}" method="get">{% csrf_token %}
+            {% include 'create/show_error.html' %}
+            <div class="multiurls_form">{{ get_urls_products }}</div>
+            <input type="submit" value="Ejecutar">
+        </form>
     </div>
+    {% if products %}
+        <div id="show">
+        {% for product in products %}
+            {% with data=product.product %}
+            <div class="title">
+                <div>{{ data.title }}</div>
+            </div>
+            <img title="{{ data.title }}" src="{{ data.src }}">
+            <div class="category">
+                <div>{{ data.genero }}</div>
+            </div>
+            <div class="date">
+                <div>{{ data.date }}</div>
+            </div>
+            <div class="console">
+                <div>{{ data.platform }}</div>
+            </div>
+            <div class="prices">
+                <div>{{ data.prices }}</div>
+                <div>{{ data.price_sale }}</div>
+            </div>
+            <div class="description">
+                <p>{{ data.description }}
+            </div>
+            {% endwith %}
+        {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

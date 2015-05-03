@@ -5,20 +5,20 @@ from models import Shop, Game, PricesGame
 
 class ShopAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Informacion', {'fields': ['name', 'description', 'url', 'activate']})
+        ('Informacion', {'fields': ['name', 'description', 'url', 'active']})
     ]
 
-    list_display = ('__unicode__', 'name', 'activate')
-    list_filter = ['name', 'activate']
+    list_display = ('__unicode__', 'name', 'active')
+    list_filter = ['name', 'active']
 
 
 class GameAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Juegos', {'fields': ['name', 'console', 'category', 'description',
+        ('Juegos', {'fields': ['name', 'category', 'description',
                                'release_date', 'prices']})
     ]
-    list_display = ('__unicode__', 'name', 'console', 'category')
-    list_filter = ['name', 'console', 'category', 'release_date']
+    list_display = ('__unicode__', 'name', 'category')
+    list_filter = ['name', 'category', 'release_date']
 
 
 class PricesAdmin(admin.ModelAdmin):

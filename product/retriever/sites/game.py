@@ -1,6 +1,5 @@
 __author__ = 'ismael'
 
-from bs4 import BeautifulSoup
 from ...base import ProductRetriever
 
 TAGS = [('code', 'sku'), ('publisher', 'publisher'), ('genero', 'genre'),
@@ -11,18 +10,17 @@ PRICESTAGS = ['PriceInt', 'NoPrice']
 
 class GameShopRetriever(ProductRetriever):
 
-    def _parse_detail_url(self, response, url, **kwargs):
-        soup = BeautifulSoup(response.body_as_unicode())
-        product_info = soup.find('div', 'big-inside-panel ponmeborde_gris')
-        self.__parse_price_product(soup.find('div', id='ctl00_CPH_Body_Master_ProductPriceView1_Pnl'))
+    def parse_detail_url(self):
+        product_info = self.soup.find('div', 'big-inside-panel ponmeborde_gris')
+        self.__parse_price_product(self.soup.find('div', id='ctl00_CPH_Body_Master_ProductPriceView1_Pnl'))
         self.__parse_product_info(product_info)
-        self.__parse_description(soup.find('div', id='ficha-texto-descripcion'))
-        self.__parse_imgs(soup.find('div', id='ctl00_CPH_Body_Master_CoverFlow1_tn_list'))
+        self.__parse_description(self.soup.find('div', 'ficha-texto-descripcion'))
+        self.__parse_imgs(self.soup.find('div', id='ctl00_CPH_Body_Master_CoverFlow1_tn_list'))
         return self.product_info, None
 
     def __parse_product_info(self, product_info):
-        self.product_info['title'] = product_info.find('span', id='ctl00_CPH_Body_Master_lbl_name')
-        self.product_info['img main'] = product_info.find('img', id='ctl00_CPH_Body_Master_img_box')
+        self.product_info['title'] = product_info.find('span', id='ctl00_CPH_Body_Master_lbl_name').text
+        self.product_info['src'] = product_info.find('img', id='ctl00_CPH_Body_Master_img_box')['src']
         platform = product_info.find('div', 'ficha-plataforma-pegi')
         self.product_info['platform'] = platform.img['src'].split('/')[-1].split('_')[-1].split('.')[0]
         product_table = product_info.find('div', 'ficha-producto-table')
@@ -40,5 +38,6 @@ class GameShopRetriever(ProductRetriever):
         self.product_info['description'] = span_description.getText()
 
     def __parse_imgs(self, imgs):
-        list_img = imgs.find_all('a')
+        if imgs:
+            list_img = imgs.find_all('a')
 

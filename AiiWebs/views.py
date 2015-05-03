@@ -25,5 +25,4 @@ def function_in_view(request):
         return admin(request, errors={'errors': Error_Form})
     urls = urls_form.data['urls'].split('\r\n')
     manage_url = ManageUrl(urls=urls, thread=len(urls) > 1)
-    if manage_url.has_end():
-        return admin(request, product={'product': manage_url.products})
+    return admin(request, products=manage_url.context)

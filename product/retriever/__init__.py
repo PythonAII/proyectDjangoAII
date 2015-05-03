@@ -1,4 +1,4 @@
-from urlparse import urlparse
+from product.util import get_domain
 from django.utils.importlib import import_module
 
 COMPLEMENT_RETRIEVER = 'ShopRetriever'
@@ -16,9 +16,7 @@ class ProductRetrieverRegistry(object):
     def get_for_url(self, url):
         """Return an appropiate ProductRetriever instance for the given URL."""
         from AiiWebs.models import Shop
-        parsed_url = urlparse(url)
-        domain = parsed_url.hostname
-        domain = domain.split('.')[1] if domain.startswith('www') else domain.split('.')[0]
+        domain = get_domain(url)
         if domain is None:
             pass #Error
         #shop = Shop.objects.get_shop(domain.lower())

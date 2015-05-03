@@ -1,23 +1,16 @@
 __author__ = 'ismael'
 
 import re
-import requests
 from decimal import Decimal
-from urlparse import urlparse
-from AiiWebs.models import Shop
+from bs4 import BeautifulSoup
 
 
 class ProductRetriever(object):
 
-    def __init__(self, url):
-        self.parse_url = urlparse(url)
+    def __init__(self, url, response):
+        self.url = url
         self.product_info = {}
-
-        hostname = self.parse_url.hostname
-        if hostname and self.parser_url():
-            self.generate_product()
-        else:
-            pass #Error escribirlo mas tarde
+        self.soup = BeautifulSoup(response)
 
     def _parse_price(self, texts):
         s = set()
@@ -45,22 +38,5 @@ class ProductRetriever(object):
             pass #Error escribirlo mas tarde
         return max(s), min(s) if len(s) == 2 else None
 
-    def parser_url(self):
-        check_hostname = self.parse_url.hostname
-        hostname = check_hostname.split[1] if check_hostname.startswith('www') else check_hostname.split[0]
-        if Shop.objects.shop(hostname.lower()):
-            return True
-        return False
-
-    def generate_product(self):
-        retriever = eval(self.parse_url.hostname.lower())
-        retrieverInfo, img = retriever._parse_detail_url(self)
-
-    def get_request(self):
-        request = requests.get(self.parse_url.geturl())
-        if request.status_code is 200:
-            self.request = request
-        else:
-            pass #Error
-
-
+    def parse_detail_url(self):
+        pass
