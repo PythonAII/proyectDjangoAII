@@ -14,7 +14,7 @@ class ShopAdmin(admin.ModelAdmin):
 
 class GameAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Juegos', {'fields': ['name', 'category', 'description',
+        ('Juegos', {'fields': ['name', 'description', 'category',
                                'release_date', 'prices']})
     ]
     list_display = ('__unicode__', 'name', 'category')

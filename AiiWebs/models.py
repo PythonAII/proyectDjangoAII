@@ -106,4 +106,4 @@ class Game(models.Model):
         ordering = ['name', 'category', 'release_date']
 
     def __unicode__(self):
-        return u'%s - %s | %s' % (self.name, self.category)
+        return u'%s - %s | %s' % (self.name, self.category, self.release_date)
