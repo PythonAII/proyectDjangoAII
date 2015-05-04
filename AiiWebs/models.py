@@ -93,7 +93,7 @@ class GameManager(models.Manager):
 class Game(models.Model):
 
     name = models.CharField(max_length=100, verbose_name=_(_(u'Nombre')))
-    description = models.TextField(max_length=400, verbose_name=_(u'Descipción'))
+    description = models.TextField(max_length=3000, verbose_name=_(u'Descipción'))
     category = models.CharField(choices=CATEGORY_CHOICE, max_length=400, verbose_name=_(u'Categoria'))
     release_date = models.DateTimeField(verbose_name=_(u'Fecha de lanzamiento'), blank=True, null=True)
     prices = models.ManyToManyField(PricesGame, verbose_name=_(u'recommended Price'), blank=True, null=True)

@@ -1,0 +1,76 @@
+[
+    {
+        "pk": 1,
+        "model": "AiiWebs.Shop",
+        "fields": {
+            "name": "game",
+            "description": "",
+            "url": "http://www.game.es/",
+            "active": true
+        }
+    },
+    {
+        "pk": 1,
+        "model": "AiiWebs.PricesGame",
+        "fields": {
+            "shop": 1,
+            "console": "ps4",
+            "price_old": 40.99,
+            "price_now": 34
+        }
+    },
+    {
+        "pk": 2,
+        "model": "AiiWebs.PricesGame",
+        "fields": {
+            "shop": 1,
+            "console": "ps4",
+            "price_old": 39.95,
+            "price_now": 34
+        }
+    },
+    {
+        "pk": 3,
+        "model": "AiiWebs.PricesGame",
+        "fields": {
+            "shop": 1,
+            "console": "ps4",
+            "price_old": 59.95,
+            "price_now": 54
+        }
+    },
+    {
+        "pk": 1,
+        "model": "AiiWebs.Game",
+        "fields": {
+            "name": "awesomenauts assemble",
+            "description": "Caracteristicas - Juego de plataformas on-line de acción (MOBA) con estilo de dibujos animados de los años ochenta",
+            "category": "Plataformas",
+            "release_date": "2015-01-16T13:20:30.844Z",
+            "prices": [1]
+        }
+    },
+    {
+        "pk": 2,
+        "model": "AiiWebs.Game",
+        "fields": {
+            "name": "Little Big Planet 3 (Edicion Limitada)",
+            "description": "Descripcion del producto:LA EDICIoN LIMITADA INCLUYE: - Pack de trajes Dragon Age: Inquisition que te permitira vestir a tus personajes con los trajes oficiales del popular juego de rol",
+            "category": "Plataformas",
+            "release_date": "2014-11-27T13:20:30.844Z",
+            "prices": [2]
+        }
+    },
+    {
+        "pk": 3,
+        "model": "AiiWebs.Game",
+        "fields": {
+            "name": "lego jurassic world",
+            "description": "Reserva LEGO Jurassic World en GAME.es y llevate un exclusivo DLC y esta fantastica figura de regalo",
+            "category": "Aventura",
+            "release_date": "2015-06-30T13:20:30.844Z",
+            "prices": [3]
+        }
+    }
+]
+
