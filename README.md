@@ -1,15 +1,22 @@
-Instalar Postgresql
-------------------------------------------------------
+Configurar Area de trabajo
+--------------------------
+
+
+1)Instalar Postgresql y Crear Base de dato
+------------------------------------------
 sudo apt-get update
 sudo apt-get install postgresql postgresql-contrib
-
 
 sudo -i -u postgres
 
 $ createuser aii -d -R -S -P  # use "aii" password
 $ createdb dbaii -O aii -E utf8
 
-Instalar virtualenv
+2)Descargar projecto de GITHUTB
+------------------------------
+https://github.com/PythonAII/proyectDjangoAII
+
+3)Instalar virtualenv
 ------------------------------------------------------
 
 $ sudo pip install virtualenvwrapper
@@ -36,7 +43,8 @@ Volver a ejecutar:
 
 (AII)$ echo export DJANGO_SETTINGS_MODULE=AIIWeb.settings.dev >> $VIRTUAL_ENV/bin/postactivate
 (AII)$ echo unset DJANGO_SETTINGS_MODULE >> $VIRTUAL_ENV/bin/postdeactivate
+(AII)$ echo "cd /to path proyect/" >> $VIRTUAL_ENV/bin/postactivate
 
 (AII)$ python manage.py syncdb
 (AII)$ python manage.py migrate
------------------------------------
+

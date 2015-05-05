@@ -22,6 +22,9 @@ class ManageUrl():
         from product.retriever import registry
         context = {}
         dict_retriever = registry.get_for_url(url)
+        shop = dict_retriever['shop']
+        if not shop or not shop.active:
+            pass #error
         Retriever = dict_retriever['retriever']
         request = requests.get(url)
         if request.status_code is not 200:

@@ -16,14 +16,12 @@ class ProductRetrieverRegistry(object):
     def get_for_url(self, url):
         """Return an appropiate ProductRetriever instance for the given URL."""
         from AiiWebs.models import Shop
-        domain = get_domain(url)
+        domain = get_domain(url).lower()
         if domain is None:
             pass #Error
-        #shop = Shop.objects.get_shop(domain.lower())
-        #if not shop:
-            pass #Error
-        self.get_retriever(domain.lower())
-        #self.registry['shop'] = shop
+        shop = Shop.objects.get(name=domain)
+        self.get_retriever(domain)
+        self.registry['shop'] = shop
         self.registry['url'] = url
         return self.registry
 

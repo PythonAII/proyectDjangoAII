@@ -11,8 +11,8 @@ class ShopQuerySet(models.query.QuerySet):
     def shops(self):
         return self.exclude(active=False)
 
-    def get_shop(self, name):
-        return self.shops.filter(name=name)
+    def is_shop(self, name):
+        return self.get(name=name).active
 
 
 class ShopManager(models.Manager):
