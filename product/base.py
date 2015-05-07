@@ -1,5 +1,3 @@
-__author__ = 'ismael'
-
 import re
 from util import get_domain
 from decimal import Decimal

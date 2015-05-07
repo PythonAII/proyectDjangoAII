@@ -1,5 +1,3 @@
-__author__ = 'ismael'
-
 from ...base import ProductRetriever
 
 TAGS = [('publisher', 'publisher'), ('genero', 'genre'),
