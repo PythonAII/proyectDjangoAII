@@ -2,7 +2,7 @@ __author__ = 'ismael'
 
 from ...base import ProductRetriever
 
-TAGS = [('code', 'sku'), ('publisher', 'publisher'), ('genero', 'genre'),
+TAGS = [('publisher', 'publisher'), ('genero', 'genre'),
         ('date', 'releaseDate'), ('stock', 'availability')]
 
 PRICESTAGS = ['PriceInt', 'NoPrice']

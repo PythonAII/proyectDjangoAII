@@ -1,21 +1,11 @@
 from django.contrib import admin
-from models import Shop, Game, PricesGame
+from product.models import Game, PricesGame
 # Register your models here.
-
-
-class ShopAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Informacion', {'fields': ['name', 'description', 'url', 'active']})
-    ]
-
-    list_display = ('__unicode__', 'name', 'active')
-    list_filter = ['name', 'active']
-
 
 class GameAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Juegos', {'fields': ['name', 'description', 'category',
-                               'release_date', 'prices']})
+                               'release_date', 'prices', 'pegi', 'imgs']})
     ]
     list_display = ('__unicode__', 'name', 'category')
     list_filter = ['name', 'category', 'release_date']
@@ -23,7 +13,7 @@ class GameAdmin(admin.ModelAdmin):
 
 class PricesAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Tienda', {'fields': ['shop']}),
+        ('Tienda', {'fields': ['shop', 'url']}),
         ('Precio', {'fields': ['price_old', 'price_now']})
     ]
 
@@ -31,5 +21,4 @@ class PricesAdmin(admin.ModelAdmin):
     list_filter = ['shop', 'price_now']
 
 admin.site.register(PricesGame, PricesAdmin)
-admin.site.register(Shop, ShopAdmin)
 admin.site.register(Game, GameAdmin)

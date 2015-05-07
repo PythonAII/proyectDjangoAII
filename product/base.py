@@ -11,7 +11,6 @@ class ProductRetriever(object):
     def __init__(self, url, response):
         self.url = url
         self.product_info = {
-            'shop': get_domain(url),
             'url': url,
         }
         self.soup = BeautifulSoup(response)

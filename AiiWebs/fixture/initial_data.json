@@ -1,75 +1,77 @@
 [
     {
         "pk": 1,
-        "model": "AiiWebs.Shop",
+        "model": "product.PricesGame",
         "fields": {
-            "name": "game",
-            "description": "",
-            "url": "http://www.game.es/",
-            "active": true
-        }
-    },
-    {
-        "pk": 1,
-        "model": "AiiWebs.PricesGame",
-        "fields": {
-            "shop": 1,
+            "shop": "Game",
             "console": "ps4",
             "price_old": 40.99,
-            "price_now": 34
+            "price_now": 34,
+            "url": "http://www.game.es/Product/Default.aspx?SKU=105826",
+            "gift":null
         }
     },
     {
         "pk": 2,
-        "model": "AiiWebs.PricesGame",
+        "model": "product.PricesGame",
         "fields": {
-            "shop": 1,
+            "shop": "Game",
             "console": "ps4",
             "price_old": 39.95,
-            "price_now": 34
+            "price_now": 34,
+            "url": "http://www.game.es/Product/Default.aspx?SKU=104692",
+            "gift":null
         }
     },
     {
         "pk": 3,
-        "model": "AiiWebs.PricesGame",
+        "model": "product.PricesGame",
         "fields": {
-            "shop": 1,
+            "shop": "Game",
             "console": "ps4",
             "price_old": 59.95,
-            "price_now": 54
+            "price_now": 54,
+            "url": "/Product/Default.aspx?SKU=112983",
+            "gift": "/images/bonus/113800_tn.jpg"
         }
     },
     {
         "pk": 1,
-        "model": "AiiWebs.Game",
+        "model": "product.Game",
         "fields": {
             "name": "awesomenauts assemble",
             "description": "Caracteristicas - Juego de plataformas on-line de acción (MOBA) con estilo de dibujos animados de los años ochenta",
             "category": "Plataformas",
             "release_date": "2015-01-16T13:20:30.844Z",
-            "prices": [1]
+            "prices": [1],
+            "pegi": "images/PEGI/pegi_12.gif",
+            "imgs": "http://media.game.es/Screenshots/105/105826/1_XXL.jpg|http://media.game.es/Screenshots/105/105826/2_XXL.jpg|http://media.game.es/Screenshots/105/105826/3_XXL.jpg|http://media.game.es/Screenshots/105/105826/4_XXL.jpg"
         }
     },
     {
         "pk": 2,
-        "model": "AiiWebs.Game",
+        "model": "product.Game",
         "fields": {
             "name": "Little Big Planet 3 (Edicion Limitada)",
             "description": "Descripcion del producto:LA EDICIoN LIMITADA INCLUYE: - Pack de trajes Dragon Age: Inquisition que te permitira vestir a tus personajes con los trajes oficiales del popular juego de rol",
             "category": "Plataformas",
             "release_date": "2014-11-27T13:20:30.844Z",
-            "prices": [2]
+            "prices": [2],
+            "pegi": null,
+            "imgs": "http://media.game.es/Screenshots/104/104692/1_XXL.jpg|http://media.game.es/Screenshots/104/104692/2_XXL.jpg|http://media.game.es/Screenshots/104/104692/3_XXL.jpg|http://media.game.es/Screenshots/104/104692/4_XXL.jpg|http://media.game.es/Screenshots/104/104692/5_XXL.jpg"
         }
     },
     {
         "pk": 3,
-        "model": "AiiWebs.Game",
+        "model": "product.Game",
         "fields": {
             "name": "lego jurassic world",
             "description": "Reserva LEGO Jurassic World en GAME.es y llevate un exclusivo DLC y esta fantastica figura de regalo",
             "category": "Aventura",
             "release_date": "2015-06-30T13:20:30.844Z",
-            "prices": [3]
+            "prices": [3],
+            "pegi": null,
+            "imgs": "http://media.game.es/Screenshots/112/112983/1_XXL.jpg|http://media.game.es/Screenshots/112/112983/2_XXL.jpg|http://media.game.es/Screenshots/112/112983/3_XXL.jpg|http://media.game.es/Screenshots/112/112983/4_XXL.jpg|http://media.game.es/Screenshots/112/112983/5_XXL.jpg"
         }
     }
 ]

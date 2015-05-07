@@ -3,8 +3,8 @@ import threading
 
 
 class ManageUrl():
-    def __init__(self, urls=None, thread=False):
-        self.finish = []
+    def __init__(self, urls, thread=False):
+        self.finish = [False for _ in xrange(0, len(urls))]
         self.context = []
         if thread:
             self.threads = list()
@@ -23,8 +23,9 @@ class ManageUrl():
         context = {}
         dict_retriever = registry.get_for_url(url)
         shop = dict_retriever['shop']
-        if not shop or not shop.active:
+        if not shop:
             pass #error
+        context['shop'] = shop
         Retriever = dict_retriever['retriever']
         request = requests.get(url)
         if request.status_code is not 200:
@@ -34,9 +35,9 @@ class ManageUrl():
         context['product'], context['imgs'] = retriever.parse_detail_url()
         self.context.append(context)
         if index:
-            self.finish.insert(index, True)
+            self.finish[index] = True
         else:
-            self.finish.append(True)
+            self.finish[0] = True
 
     def manage(self, urls):
         for index, url in enumerate(urls):

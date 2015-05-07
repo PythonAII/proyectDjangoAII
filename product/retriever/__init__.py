@@ -1,3 +1,4 @@
+from product import SHOPS
 from product.util import get_domain
 from django.utils.importlib import import_module
 
@@ -15,19 +16,21 @@ class ProductRetrieverRegistry(object):
 
     def get_for_url(self, url):
         """Return an appropiate ProductRetriever instance for the given URL."""
-        from AiiWebs.models import Shop
-        domain = get_domain(url).lower()
+        domain = get_domain(url).capitalize()
         if domain is None:
             pass #Error
-        shop = Shop.objects.get(name=domain)
-        self.get_retriever(domain)
-        self.registry['shop'] = shop
+        self.registry['shop'] = None
+        for key, shop in SHOPS.iteritems():
+            if shop['name'] == domain and shop['active']:
+                self.registry['shop'] = shop
+                self.get_retriever(shop['name'])
+                break
         self.registry['url'] = url
         return self.registry
 
     def get_retriever(self, shop_name):
         from ..base import ProductRetriever
-        retriever = getattr(self.modules(), '%s%s' % (shop_name.capitalize(), COMPLEMENT_RETRIEVER))
+        retriever = getattr(self.modules(), '%s%s' % (shop_name, COMPLEMENT_RETRIEVER))
         assert(issubclass(retriever, ProductRetriever))
         self.registry['retriever'] = retriever
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'ismael'
 
 FORMAT_CHOICE = (
     (u'jpg', u'jpg'),
