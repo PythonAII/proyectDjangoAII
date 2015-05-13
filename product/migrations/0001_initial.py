@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         db.create_table('product_pricesgame', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('shop', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('stock', self.gf('django.db.models.fields.TextField')()),
+            ('stock', self.gf('django.db.models.fields.IntegerField')()),
             ('plataform', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('price_old', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
             ('price_now', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
@@ -24,6 +24,7 @@ class Migration(SchemaMigration):
         # Adding model 'GameImage'
         db.create_table('product_gameimage', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=40)),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
             ('height', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('width', self.gf('django.db.models.fields.PositiveIntegerField')()),
@@ -139,6 +140,7 @@ class Migration(SchemaMigration):
             'height': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'width': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
         'product.gamepegi': {
@@ -154,7 +156,7 @@ class Migration(SchemaMigration):
             'price_now': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
             'price_old': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
             'shop': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'stock': ('django.db.models.fields.TextField', [], {}),
+            'stock': ('django.db.models.fields.IntegerField', [], {}),
             'url': ('django.db.models.fields.URLField', [], {'unique': 'True', 'max_length': '200'})
         }
     }

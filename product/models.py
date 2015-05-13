@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from AIIWeb.settings import MEDIA_ROOT
 from django.utils.translation import ugettext_lazy as _
 
 from product import CONSOLE_CHOICE, CATEGORY_CHOICE, PEGI_CHOICE, STOCK_CHOICE
@@ -14,10 +15,14 @@ class PricesQuerySet(models.query.QuerySet):
         else:
             return False
 
-    def update_precio(self, url, stock, plataform, price_old, price_new, gift):
+    def update_price(self, prices_dict):
+        url = prices_dict['url']
+        gift = prices_dict['gift']
+        stock = prices_dict['stock']
+        platform = prices_dict['platform']
+        price_old, price_new = prices_dict['prices'], prices_dict['price_sale']
         price = self.get(url=url)
-        price.update(stock=stock, plataform=plataform, price_new=price_new, price_old=price_old, gift=gift)
-        return price
+        price.update(stock=stock, plataform=platform, price_new=price_new, price_old=price_old, gift=gift)
 
 
 class PricesManager(models.Manager):
@@ -49,39 +54,40 @@ class PricesGame(models.Model):
         verbose_name_plural = _(u'Precios')
         ordering = ["shop", "price_now", "price_old"]
 
-    @classmethod
-    def add_price(cls, prices_dict):
+    def add_price(self, prices_dict):
         url = prices_dict['url']
         gift = prices_dict['gift']
         stock = prices_dict['stock']
         shop = prices_dict['shop']
-        plataform = prices_dict['plataform']
-        price_old, price_new = prices_dict['prices']
-        if cls.objects.is_url(url):
-            price = cls.objects.update_price(url, stock, plataform, price_old, price_new, gift)
-        else:
-            price = cls.create_price(shop, stock, plataform, price_old, price_new, url, gift)
-        return price
+        platform = prices_dict['platform']
+        price_old, price_new = prices_dict['prices'], prices_dict['price_sale']
+        self.create_price(shop, stock, platform, price_old, price_new, url, gift)
 
-    @classmethod
-    def create_price(cls, shop, stock, plataform, price_old, price_new, url, gift):
-        prices = PricesGame(shop, stock, plataform, price_old, price_new, url, gift)
-        prices.save()
-        return prices
+    def create_price(self, shop, stock, platform, price_old, price_new, url, gift):
+        self.shop = shop
+        self.stock = stock
+        self.plataform = platform
+        self.price_old = price_old
+        self.price_now = price_new
+        self.url = url
+        self.gift = gift
+        self.save()
 
     def __unicode__(self):
         return u'%s - (%s, %s) | %s' % (self.shop, self.price_old, self.price_now, self.url)
 
 
-def product_image_upload_to(product_id, filename):
-    return u'product/imgs/%s-%s' % (product_id, filename[max(0, len(path) + len(filename) - 100):])
+def product_image_upload_to(gameimage, filename):
+
+    return MEDIA_ROOT + u'/' + gameimage.name.lower() + u'/' + filename[max(0, len(MEDIA_ROOT) + len(filename) - 100):]
 
 
 def _product_image_upload_to(gameimage, filename):
-    return product_image_upload_to(gameimage.product_id, filename)
+    return product_image_upload_to(gameimage, filename)
 
 
 class GameImage(models.Model):
+    name = models.CharField(max_length=40, verbose_name=_(u'Nombre'))
     image = models.ImageField(_(u'image'), upload_to=_product_image_upload_to,
                               height_field='height', width_field='width')
     height = models.PositiveIntegerField(_(u'height'), editable=False)
@@ -91,8 +97,14 @@ class GameImage(models.Model):
         verbose_name = _(u'Imagen')
         verbose_name_plural = _(u'Imagenes')
 
+    def save_image(self, filename, image):
+        from django.core.files.base import ContentFile
+        self.image.save(filename, ContentFile(image))
+        self.name += u' - %s' % self.id
+        self.save()
+
     def __unicode__(self):
-        return self.image.name
+        return self.name
 
 
 class GameQuerySet(models.query.QuerySet):
@@ -159,8 +171,7 @@ class Game(models.Model):
     def __unicode__(self):
         return u'%s - %s | %s' % (self.name, self.category, self.release_date)
 
-    @classmethod
-    def add_game(cls, dict_game):
+    def add_game(self, dict_game):
         name = dict_game['title']
         desciption = dict_game['description']
         category = dict_game['category']
@@ -169,5 +180,13 @@ class Game(models.Model):
         imagen = dict_game['imagen']
         pegi = dict_game['pegi']
         imagenes = dict_game['imagenes']
-        if not cls.objects.exists(name=name):
-            Game(name, desciption, category, release_date, prices, pegi, imagen, imagenes)
+        if not Game.objects.exists(name=name):
+            self.name = name
+            self.description = desciption
+            self.category = category
+            self.release_date = release_date
+            self.prices = prices
+            self.pegi = pegi
+            self.imagen = imagen
+            self.imagenes = imagenes
+            self.save()

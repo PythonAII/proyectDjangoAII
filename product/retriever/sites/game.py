@@ -1,3 +1,4 @@
+import re
 from ...base import ProductRetriever
 
 TAGS = [('publisher', 'publisher'), ('genero', 'genre'),
@@ -5,6 +6,7 @@ TAGS = [('publisher', 'publisher'), ('genero', 'genre'),
 
 PRICESTAGS = ['PriceInt', 'NoPrice']
 
+IMAGEN_RE = re.compile(ur'href="(.*?)"')
 
 class GameShopRetriever(ProductRetriever):
 
@@ -13,8 +15,8 @@ class GameShopRetriever(ProductRetriever):
         self.__parse_price_product(self.soup.find('div', id='ctl00_CPH_Body_Master_ProductPriceView1_Pnl'))
         self.__parse_product_info(product_info)
         self.__parse_description(self.soup.find('div', 'ficha-texto-descripcion'))
-        self.__parse_imgs(self.soup.find('div', id='ctl00_CPH_Body_Master_CoverFlow1_tn_list'))
-        return self.product_info, None
+        imgs = self.__parse_imgs()
+        return self.product_info, imgs
 
     def __parse_product_info(self, product_info):
         self.product_info['title'] = product_info.find('span', id='ctl00_CPH_Body_Master_lbl_name').text
@@ -35,7 +37,13 @@ class GameShopRetriever(ProductRetriever):
         span_description = descriptions.find('span', id='ctl00_CPH_Body_Master_lbl_desc')
         self.product_info['description'] = span_description.getText()
 
-    def __parse_imgs(self, imgs):
+    def __parse_imgs(self):
+        CHECK = u'http://media.game.es/Screenshots'
+        imgs = IMAGEN_RE.findall(self.soup.getText())
+        list_imgs = []
         if imgs:
-            list_img = imgs.find_all('a')
+            for img in imgs:
+                if img.startswith(CHECK):
+                    list_imgs.append(img)
+            return list_imgs
 

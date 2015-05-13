@@ -8,4 +8,4 @@ def get_domain(url):
 
 
 def get_filename(image):
-    return image.split('/')[-1].split['.'][0]
+    return image.split('/')[-1]

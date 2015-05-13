@@ -1,5 +1,6 @@
 import requests
 import threading
+from product.base import save_product
 
 
 class ManageUrl():
@@ -25,14 +26,16 @@ class ManageUrl():
         shop = dict_retriever['shop']
         if not shop:
             pass #error
-        context['shop'] = shop
         Retriever = dict_retriever['retriever']
         request = requests.get(url)
         if request.status_code is not 200:
             pass # Error
         response = request.text
         retriever = Retriever(url, response)
-        context['product'], context['imgs'] = retriever.parse_detail_url()
+        product_info, imgs = retriever.parse_detail_url()
+        product_info['shop'] = shop
+        context['product'], context['imgs'] = product_info, imgs
+        save_product(context['product'], context['imgs'])
         self.context.append(context)
         if index:
             self.finish[index] = True

@@ -3,6 +3,7 @@ from decimal import Decimal
 from bs4 import BeautifulSoup
 from util import get_filename
 
+
 class ProductRetriever(object):
 
     def __init__(self, url, response):
@@ -51,21 +52,26 @@ def save_product(product_info, imgs_no_downloand):
             filename = get_filename(img)
             request_imagen = requests.get(img)
             if request_imagen.status_code is 200:
-                imgs_downloand.append(GameImage(filename, request_imagen.content))
-    if 'gift' is not product_info:
+                image = GameImage(name=product_info['title'])
+                image.save_image(filename, request_imagen.content)
+                imgs_downloand.append(image)
+    if 'gift' not in product_info:
         product_info['gift'] = None
-    if 'stock' is not product_info:
+    if 'stock' not in product_info:
         from product import STOCK_CHOICE
         product_info['stock'] = STOCK_CHOICE.get('reserva')
     product_info['imagenes'] = imgs_downloand if imgs_downloand else None
-    if product_info['main']:
-        img = product_info['main']
-        filename = get_filename(img)
-        request = requests.get(img)
-        if request.status_code is 200:
-            product_info['imagen'] = GameImage(filename, request.content )
-        else:
-            product_info['imagen'] = None
-    prices = PricesGame.add_price(product_info)
+    img = product_info['src']
+    filename = get_filename(img)
+    request = requests.get(img)
+    if request.status_code is 200:
+        image = GameImage(name=product_info['title'])
+        image.save_image("main." + filename.split('.')[1], request.content)
+        product_info['imagen'] = image
+    else:
+        product_info['imagen'] = None
+    prices = PricesGame()
+    prices.add_price(product_info)
     product_info['prices'] = prices
-    game = Game.add_game(product_info)
+    game = Game()
+    game.add_game(product_info)
