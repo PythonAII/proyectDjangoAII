@@ -1,15 +1,16 @@
 from django.contrib import admin
-from product.models import Game, PricesGame
+from product.models import Game, PricesGame, GameCategory, GameImage, GamePegi
 from models import GameUser
 # Register your models here.
+
 
 class GameAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Juegos', {'fields': ['name', 'description', 'category',
-                               'release_date', 'prices', 'pegi', 'imgs']})
+                               'release_date', 'prices', 'pegi', 'imagen', 'imagenes']})
     ]
-    list_display = ('__unicode__', 'name', 'category')
-    list_filter = ['name', 'category', 'release_date']
+    list_display = ('__unicode__', 'name', )
+    list_filter = ['name', 'category__name', 'release_date']
 
 
 class UsersAdmin(admin.ModelAdmin):
@@ -23,13 +24,16 @@ class UsersAdmin(admin.ModelAdmin):
 
 class PricesAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Tienda', {'fields': ['shop', 'url']}),
-        ('Precio', {'fields': ['price_old', 'price_now']})
+        ('Tienda', {'fields': ['shop', 'plataform', 'url', 'gift']}),
+        ('Precio', {'fields': ['stock', 'price_old', 'price_now']})
     ]
 
-    list_display = ('__unicode__', 'shop', 'price_now', 'price_old')
-    list_filter = ['shop', 'price_now']
+    list_display = ('__unicode__', 'shop', 'plataform', 'stock', 'price_now', 'price_old')
+    list_filter = ['shop', 'plataform', 'stock', 'price_now']
 
 admin.site.register(PricesGame, PricesAdmin)
 admin.site.register(Game, GameAdmin)
 admin.site.register(GameUser, UsersAdmin)
+admin.site.register(GameCategory)
+admin.site.register(GameImage)
+admin.site.register(GamePegi)

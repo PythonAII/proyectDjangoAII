@@ -1,8 +1,7 @@
 import re
-from util import get_domain
 from decimal import Decimal
 from bs4 import BeautifulSoup
-
+from util import get_filename
 
 class ProductRetriever(object):
 
@@ -41,3 +40,32 @@ class ProductRetriever(object):
 
     def parse_detail_url(self):
         pass
+
+
+def save_product(product_info, imgs_no_downloand):
+    from models import GameImage, PricesGame, Game
+    import requests
+    imgs_downloand = []
+    if imgs_no_downloand:
+        for img in imgs_no_downloand:
+            filename = get_filename(img)
+            request_imagen = requests.get(img)
+            if request_imagen.status_code is 200:
+                imgs_downloand.append(GameImage(filename, request_imagen.content))
+    if 'gift' is not product_info:
+        product_info['gift'] = None
+    if 'stock' is not product_info:
+        from product import STOCK_CHOICE
+        product_info['stock'] = STOCK_CHOICE.get('reserva')
+    product_info['imagenes'] = imgs_downloand if imgs_downloand else None
+    if product_info['main']:
+        img = product_info['main']
+        filename = get_filename(img)
+        request = requests.get(img)
+        if request.status_code is 200:
+            product_info['imagen'] = GameImage(filename, request.content )
+        else:
+            product_info['imagen'] = None
+    prices = PricesGame.add_price(product_info)
+    product_info['prices'] = prices
+    game = Game.add_game(product_info)
