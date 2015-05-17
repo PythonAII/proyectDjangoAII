@@ -9,7 +9,7 @@ class GameAdmin(admin.ModelAdmin):
         ('Juegos', {'fields': ['name', 'description', 'category',
                                'release_date', 'prices', 'pegi', 'imagen', 'imagenes']})
     ]
-    list_display = ('__unicode__', 'name', )
+    list_display = ('__unicode__', 'name')
     list_filter = ['name', 'category__name', 'release_date']
 
 

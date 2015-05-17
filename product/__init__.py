@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 SHOPS = {
     "pk1": {
         "name": "Game",
@@ -22,7 +23,7 @@ SHOPS = {
 }
 
 PEGI_CHOICE = {
-    (18, 100),
+    (100, 18),
 }
 
 CONSOLE_CHOICE = (
@@ -58,5 +59,13 @@ CATEGORY_CHOICE = (
 STOCK_CHOICE = (
     (1, u'reserva'),
     (2, u'agotado'),
-    (3, u'disponible')
+    (3, u'disponible'),
+    (4, u'próximamente')
 )
+
+DICT_CONSOLE = dict((y, x) for x, y in CONSOLE_CHOICE)
+DICT_CATEGORY = dict((y, x) for x, y in CATEGORY_CHOICE)
+DICT_STOCK = dict((y, x) for x, y in STOCK_CHOICE)
+DICT_STOCK[u''] = 4
+DICT_PEGI = dict((y, x) for x, y in PEGI_CHOICE)
+DICT_CATEGORY_MODEL = dict((x, y) for x, y in CATEGORY_CHOICE)

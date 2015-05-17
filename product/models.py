@@ -4,7 +4,7 @@ from django.db import models
 from AIIWeb.settings import MEDIA_ROOT
 from django.utils.translation import ugettext_lazy as _
 
-from product import CONSOLE_CHOICE, CATEGORY_CHOICE, PEGI_CHOICE, STOCK_CHOICE
+from product import CONSOLE_CHOICE, CATEGORY_CHOICE, PEGI_CHOICE, STOCK_CHOICE, DICT_CATEGORY_MODEL
 
 
 # Create your models here.
@@ -41,7 +41,7 @@ class PricesGame(models.Model):
 
     shop = models.CharField(max_length=200, verbose_name=_(u'Tienda'))
     stock = models.IntegerField(choices=STOCK_CHOICE, verbose_name=_(u'Stock'))
-    plataform = models.CharField(choices=CONSOLE_CHOICE, max_length=200, verbose_name=_(u'Plataforma'))
+    plataform = models.IntegerField(choices=CONSOLE_CHOICE, max_length=200, verbose_name=_(u'Plataforma'))
     price_old = models.DecimalField(decimal_places=2, max_digits=5, verbose_name=_(u'Precio Antiguo'))
     price_now = models.DecimalField(decimal_places=2, max_digits=5, verbose_name=_(u'Precio Actual'))
     url = models.URLField(verbose_name=_(u'url'), verify_exists=True, unique=True)
@@ -58,7 +58,7 @@ class PricesGame(models.Model):
         url = prices_dict['url']
         gift = prices_dict['gift']
         stock = prices_dict['stock']
-        shop = prices_dict['shop']
+        shop = prices_dict['shop']['name'].lower()
         platform = prices_dict['platform']
         price_old, price_new = prices_dict['prices'], prices_dict['price_sale']
         self.create_price(shop, stock, platform, price_old, price_new, url, gift)
@@ -141,6 +141,9 @@ class GameCategory(models.Model):
         verbose_name_plural = _(u'Categorias')
         ordering = ["name"]
 
+    def __unicode__(self):
+        return u'%s' % DICT_CATEGORY_MODEL[self.name]
+
 
 class GamePegi(models.Model):
     name = models.IntegerField(choices=PEGI_CHOICE, max_length=10000, verbose_name=_(u'Clasificación'), null=True)
@@ -157,9 +160,10 @@ class Game(models.Model):
     category = models.ManyToManyField(GameCategory, max_length=400, verbose_name=_(u'Categoria'))
     release_date = models.DateTimeField(verbose_name=_(u'Fecha de lanzamiento'), blank=True, null=True)
     prices = models.ManyToManyField(PricesGame, verbose_name=_(u'recommended Price'), blank=True, null=True)
-    pegi = models.ManyToManyField(GamePegi, max_length=10000, verbose_name=_(u'Clasificación'), null=True)
-    imagen = models.ForeignKey(GameImage, verbose_name=_(u'Principal Imagen'), related_name='imagen_main')
-    imagenes = models.ManyToManyField(GameImage, verbose_name=_(u'Imagenes'))
+    pegi = models.ManyToManyField(GamePegi, max_length=10000, verbose_name=_(u'Clasificación'), blank=True, null=True)
+    imagen = models.ForeignKey(GameImage, verbose_name=_(u'Principal Imagen'), related_name='imagen_main',  blank=True,
+                               null=True)
+    imagenes = models.ManyToManyField(GameImage, verbose_name=_(u'Imagenes'), null=True)
 
     objects = GameManager()
 
@@ -169,24 +173,28 @@ class Game(models.Model):
         ordering = ['name', 'category__name', 'release_date']
 
     def __unicode__(self):
-        return u'%s - %s | %s' % (self.name, self.category, self.release_date)
+        return u'%s | %s' % (self.name, self.release_date)
 
     def add_game(self, dict_game):
         name = dict_game['title']
         desciption = dict_game['description']
         category = dict_game['category']
-        release_date = dict_game['release_date']
+        release_date = dict_game['date']
         prices = dict_game['prices']
         imagen = dict_game['imagen']
         pegi = dict_game['pegi']
         imagenes = dict_game['imagenes']
-        if not Game.objects.exists(name=name):
-            self.name = name
-            self.description = desciption
-            self.category = category
-            self.release_date = release_date
-            self.prices = prices
+        self.name = name
+        self.description = desciption
+        self.release_date = release_date
+        self.imagen = imagen
+        self.save()
+        if category:
+            self.category.add(*category)
+        if prices:
+            self.prices.add(prices)
+        if imagenes:
+            self.imagenes.add(*imagenes)
+        if pegi:
             self.pegi = pegi
-            self.imagen = imagen
-            self.imagenes = imagenes
-            self.save()
+

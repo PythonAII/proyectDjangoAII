@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('shop', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('stock', self.gf('django.db.models.fields.IntegerField')()),
-            ('plataform', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('plataform', self.gf('django.db.models.fields.IntegerField')(max_length=200)),
             ('price_old', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
             ('price_now', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
             ('url', self.gf('django.db.models.fields.URLField')(unique=True, max_length=200)),
@@ -51,7 +51,7 @@ class Migration(SchemaMigration):
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('description', self.gf('django.db.models.fields.TextField')(max_length=3000)),
             ('release_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('imagen', self.gf('django.db.models.fields.related.ForeignKey')(related_name='imagen_main', to=orm['product.GameImage'])),
+            ('imagen', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='imagen_main', null=True, to=orm['product.GameImage'])),
         ))
         db.send_create_signal('product', ['Game'])
 
@@ -123,10 +123,10 @@ class Migration(SchemaMigration):
             'category': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['product.GameCategory']", 'max_length': '400', 'symmetrical': 'False'}),
             'description': ('django.db.models.fields.TextField', [], {'max_length': '3000'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'imagen': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'imagen_main'", 'to': "orm['product.GameImage']"}),
-            'imagenes': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['product.GameImage']", 'symmetrical': 'False'}),
+            'imagen': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'imagen_main'", 'null': 'True', 'to': "orm['product.GameImage']"}),
+            'imagenes': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['product.GameImage']", 'null': 'True', 'symmetrical': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'pegi': ('django.db.models.fields.related.ManyToManyField', [], {'max_length': '10000', 'to': "orm['product.GamePegi']", 'null': 'True', 'symmetrical': 'False'}),
+            'pegi': ('django.db.models.fields.related.ManyToManyField', [], {'max_length': '10000', 'to': "orm['product.GamePegi']", 'null': 'True', 'symmetrical': 'False', 'blank': 'True'}),
             'prices': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['product.PricesGame']", 'null': 'True', 'blank': 'True'}),
             'release_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'})
         },
@@ -152,7 +152,7 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "['shop', 'price_now', 'price_old']", 'object_name': 'PricesGame'},
             'gift': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'plataform': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'plataform': ('django.db.models.fields.IntegerField', [], {'max_length': '200'}),
             'price_now': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
             'price_old': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
             'shop': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
