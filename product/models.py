@@ -78,8 +78,8 @@ class PricesGame(models.Model):
 
 
 def product_image_upload_to(gameimage, filename):
-
-    return MEDIA_ROOT + u'/' + gameimage.name.lower() + u'/' + filename[max(0, len(MEDIA_ROOT) + len(filename) - 100):]
+    path = MEDIA_ROOT + gameimage.name.lower() + u'/'
+    return path + filename[max(0, len(path) + len(filename) - 100):]
 
 
 def _product_image_upload_to(gameimage, filename):

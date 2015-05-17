@@ -88,6 +88,9 @@ class ProductRetriever(object):
 def save_product(product_info, imgs_no_downloand):
     from models import GameImage, PricesGame, Game
     import requests
+    prices = None
+    imgs_downloand = None
+    game = None
     try:
         if not Game.objects.filter(name=product_info['title']).exists():
             imgs_downloand = []
@@ -111,7 +114,7 @@ def save_product(product_info, imgs_no_downloand):
             filename = get_filename(img)
             request = requests.get(img)
             if request.status_code is 200:
-                image = GameImage(name=product_info['title'])
+                image = GameImage(name=product_info['title'][:15])
                 image.save_image("main." + filename.split('.')[1], request.content)
                 product_info['imagen'] = image
             else:
@@ -129,7 +132,7 @@ def save_product(product_info, imgs_no_downloand):
     except Exception:
         if prices:
             prices.delete()
-        if product_info['imagen']:
+        if 'imagen' in product_info:
             product_info['imagen'].delete()
         for imagen in imgs_downloand:
             imagen.delete()

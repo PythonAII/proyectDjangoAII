@@ -35,7 +35,7 @@ class GameShopRetriever(ProductRetriever):
         self.product_info['date'] = self._get_date(self.product_info['date'])
         self.product_info['category'] = self._get_code_by([self.product_info['category'].lower()],
                                                           GameCategory, DICT_CATEGORY)
-        self.product_info['stock'] = DICT_STOCK[self.product_info['stock']]
+        self.product_info['stock'] = DICT_STOCK[self.product_info['stock'].lower()]
 
     def __parse_price_product(self, prices):
         list_price = [prices.find('span', id='ctl00_CPH_Body_Master_ProductPriceView1_Lbl_%s' % tag).getText()
