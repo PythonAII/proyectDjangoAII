@@ -89,43 +89,46 @@ def save_product(product_info, imgs_no_downloand):
     from models import GameImage, PricesGame, Game
     import requests
     try:
-        imgs_downloand = []
-        if imgs_no_downloand:
-            for img in imgs_no_downloand:
-                filename = get_filename(img)
-                request_imagen = requests.get(img)
-                if request_imagen.status_code is 200:
-                    image = GameImage(name=product_info['title'])
-                    image.save_image(filename, request_imagen.content)
-                    imgs_downloand.append(image)
-        if 'gift' not in product_info:
-            product_info['gift'] = None
-        if 'stock' not in product_info:
-            from product import STOCK_CHOICE
-            product_info['stock'] = STOCK_CHOICE.get('reserva')
-        if 'pegi' not in product_info:
-            product_info['pegi'] = None
-        product_info['imagenes'] = imgs_downloand if imgs_downloand else None
-        img = product_info['src']
-        filename = get_filename(img)
-        request = requests.get(img)
-        if request.status_code is 200:
-            image = GameImage(name=product_info['title'])
-            image.save_image("main." + filename.split('.')[1], request.content)
-            product_info['imagen'] = image
-        else:
-            product_info['imagen'] = None
-        prices = PricesGame()
-        prices.add_price(product_info)
-        product_info['prices'] = prices
         if not Game.objects.filter(name=product_info['title']).exists():
+            imgs_downloand = []
+            if imgs_no_downloand:
+                for img in imgs_no_downloand:
+                    filename = get_filename(img)
+                    request_imagen = requests.get(img)
+                    if request_imagen.status_code is 200:
+                        image = GameImage(name=product_info['title'])
+                        image.save_image(filename, request_imagen.content)
+                        imgs_downloand.append(image)
+            if 'gift' not in product_info:
+                product_info['gift'] = None
+            if 'stock' not in product_info:
+                from product import STOCK_CHOICE
+                product_info['stock'] = STOCK_CHOICE.get('reserva')
+            if 'pegi' not in product_info:
+                product_info['pegi'] = None
+            product_info['imagenes'] = imgs_downloand if imgs_downloand else None
+            img = product_info['src']
+            filename = get_filename(img)
+            request = requests.get(img)
+            if request.status_code is 200:
+                image = GameImage(name=product_info['title'])
+                image.save_image("main." + filename.split('.')[1], request.content)
+                product_info['imagen'] = image
+            else:
+                product_info['imagen'] = None
+            prices = PricesGame()
+            prices.add_price(product_info)
+            product_info['prices'] = prices
             game = Game()
             game.add_game(product_info)
         else:
+            prices = PricesGame()
+            prices.add_price(product_info)
             game = Game.objects.get(name=product_info)
             game.prices.add(prices)
     except Exception:
-        prices.delete()
+        if prices:
+            prices.delete()
         if product_info['imagen']:
             product_info['imagen'].delete()
         for imagen in imgs_downloand:
