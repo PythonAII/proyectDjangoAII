@@ -26,14 +26,20 @@
     </div>
 {% endblock %}
 {% block header-right %}
-<div class="right-top">
-    <img src="{% static 'img/logo_web.png' %}"
-</div>
-<div class=right-bottom">
-    <form id="login_user" action="{% url login_user %}" method="post">{% csrf_token %}
-        <div class="login_user">{{ get_login }}</div>
-        <input type="submit" value="Enviar">
-    </form>
-    <div class="register"><a href="">Registrar</a></div>
+<div class="header-right">
+    <div class="right-top">
+        <img src="{% static 'img/logo_web.png' %}"
+    </div>
+    <div class="right-bottom">
+        <form id="login_user" action="/check_login/" method="post">{% csrf_token %}
+            {% for field in get_login %}
+            <div class="login_field">
+                {{ field.label_tag }}: {{ field }}
+            </div>
+            {% endfor %}
+            <div class="register"><a href="">Crear Cuenta</a></div>
+            <input class="send" type="submit" value="Enviar">
+        </form>
+    </div>
 </div>
 {% endblock %}

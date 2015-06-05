@@ -10,3 +10,4 @@ psycopg2==2.4.4
 Pillow
 requests
 django-debug-toolbar
+django-cms

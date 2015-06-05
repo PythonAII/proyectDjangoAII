@@ -33,7 +33,7 @@ class PricesManager(models.Manager):
         except AttributeError:
             return getattr(self.get_query_set(), attr, *args)
 
-    def get_query_set(self):
+    def get_queryset(self):
         return PricesQuerySet(self.model)
 
 
@@ -44,7 +44,7 @@ class PricesGame(models.Model):
     plataform = models.IntegerField(choices=CONSOLE_CHOICE, max_length=200, verbose_name=_(u'Plataforma'))
     price_old = models.DecimalField(decimal_places=2, max_digits=5, verbose_name=_(u'Precio Antiguo'))
     price_now = models.DecimalField(decimal_places=2, max_digits=5, verbose_name=_(u'Precio Actual'))
-    url = models.URLField(verbose_name=_(u'url'), verify_exists=True, unique=True)
+    url = models.URLField(verbose_name=_(u'url'), unique=True)
     gift = models.CharField(max_length=2000, verbose_name=_(u'Regalo'), null=True)
 
     objects = PricesManager()
@@ -129,7 +129,7 @@ class GameManager(models.Manager):
         except AttributeError:
             return getattr(self.get_query_set(), attr, *args)
 
-    def get_query_set(self):
+    def get_queryset(self):
         return GameQuerySet(self.model)
 
 

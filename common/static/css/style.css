@@ -5,9 +5,10 @@
 }
 
 .header-left {
-    width: 600px;
+    width: 47%;
     height: 250px;
-    float:left;
+    float: left;
+    margin-right: -8px;
 }
 
 .header-left span {
@@ -21,8 +22,9 @@
 }
 
 .header-right{
-    width:700px;
+    width: 53%;
     height: 250px;
+    float: left;
 }
 
 .right-top {
@@ -38,6 +40,42 @@
 }
 
 .right-top img {
-    margin-top: 15px;
+    margin-top: 20px;
     margin-left: 120px;
+    margin-bottom: 20px;
+}
+
+.right-bottom {
+    margin-top: -7px;
+    background-color: lightgray;
+    height: 90px;
+}
+
+.login_field {
+    margin-left:10%;
+}
+
+#id_password {
+    width: 200px;
+    margin-left: 6px;
+}
+
+#id_user {
+    width: 200px;
+    margin-left: 27px;
+}
+
+.send {
+    float:left;
+    margin-left:65px;
+}
+
+#login_user {
+    padding-top: 15px;
+    padding-left: 39%;
+}
+
+.register {
+  float: left;
+  margin-left: 127px;
 }

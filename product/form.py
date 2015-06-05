@@ -9,5 +9,5 @@ class Multiurls(forms.Form):
 
 
 class LoginForm(forms.Form):
-    user = forms.CharField(label='user')
-    password = forms.PasswordInput(label='password')
+    user = forms.CharField(label=u'Usuario')
+    password = forms.CharField(label=u'Contraseña', widget=forms.PasswordInput())

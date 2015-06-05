@@ -10,6 +10,7 @@ urlpatterns = patterns('AiiWebs.views',
     url(r'^$', 'home', name='home'),
     url(r'^create/$', 'admin', name='create'),
     url(r'^create/report/$', 'function_in_view', name='form_create_product'),
+    url(r'^$', 'check_login', name='login'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
