@@ -57,4 +57,5 @@ class GameShopRetriever(ProductRetriever):
             for img in imgs:
                 if img.startswith(CHECK):
                     list_imgs.append(img)
+            return list_imgs
 

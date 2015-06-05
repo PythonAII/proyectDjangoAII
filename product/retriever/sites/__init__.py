@@ -1,2 +1,3 @@
 from game import GameShopRetriever
 from xtralife import XtralifeShopRetriever
+from tutiendadevidejuegos import TutiendadevideojuegosShopRetriever

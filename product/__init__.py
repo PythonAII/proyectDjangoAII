@@ -2,7 +2,7 @@
 SHOPS = {
     "pk1": {
         "name": "Game",
-        "url": "http:\\www.game.es",
+        "url": "http://www.game.es",
         "brand": "game.png",
         "active": True,
 
@@ -10,6 +10,12 @@ SHOPS = {
     "pk2": {
         "name": 'Xtralife',
         "url": 'http://www.xtralife.es',
+        "brand": None,
+        "active": True,
+    },
+    "pk3": {
+        "name": 'Tutiendadevideojuegos',
+        "url": 'http://tutiendadevideojuegos.com',
         "brand": None,
         "active": True,
     }

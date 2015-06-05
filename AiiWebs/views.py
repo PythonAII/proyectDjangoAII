@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from product.form import Multiurls
+from product.form import Multiurls, LoginForm
 from product.retriever.base import ManageUrl
 
 # Create your views here.
@@ -7,7 +7,8 @@ from product.retriever.base import ManageUrl
 Error_Form = ur'Debe escribir al menos una URL'
 
 
-def home(request, **kwargs):
+def home(request, ):
+    context['get_login'] = LoginForm()
     return render(request, 'home.html')
 
 
