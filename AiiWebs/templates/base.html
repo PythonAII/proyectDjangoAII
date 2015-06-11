@@ -16,16 +16,86 @@
 <!-- Body -->
 <body class="{% block body-class %}{% endblock %}">
     <div class="header {% block header-class %}{% endblock %}">
-        {% block header-left %}{% endblock %}
-        {% block header-right %}{% endblock %}
-    </div>
-    <div class="toolbar{% block toolbar-class %}{% endblock %}">
-        {% block toolbar %}
+        {% block header-left %}
+        <div class="header-left">
+            <span class="img_xbox">
+                <a href="">
+                    <img src="{% static 'img/XboxOne.jpg' %}" title="XboxOne" alt="">
+                </a>
+            </span>
+            <span class="img_ps">
+                <a href="">
+                    <img src="{% static 'img/ps4.jpg' %}" title="Ps4" alt="">
+                </a>
+            </span>
+            <span class="img_wii">
+                <a href="">
+                    <img src="{% static 'img/wii-u-logo utilgame.jpg' %}" title="WiiU" alt="">
+                </a>
+            </span>
+            <span class="img_pc">
+                <a href="">
+                    <img src="{% static 'img/Pc_gamer.jpg' %}" title="Pc" alt="">
+                </a>
+            </span>
+        </div>
+        {% endblock %}
+        {% block header-right %}
+        <div class="header-right">
+            <div class="right-top">
+                <img src="{% static 'img/logo_web.png' %}"
+            </div>
+            <div class="right-bottom">
+                {% if get_login %}
+                <form id="login_user" action="{% url login %}" method="post">{% csrf_token %}
+                    {% for field in get_login %}
+                    <div class="login_field">
+                        {{ field.label_tag }}: {{ field }}
+                    </div>
+                    {% endfor %}
+                    {% if error_loggin %}
+                    <p class="error_loggin">{{ error_loggin }}</p>
+                    {% endif %}
+                    <div class="register"><a href="{% url register_user %}">Crear Cuenta</a></div>
+                    <input class="send" type="submit" value="ENVIAR">
+                </form>
+                {% elif loggin %}
+                <div class="loggin">
+                <p>Bienvenido {{ loggin }}<br><a href="{% url logout %}">Cerrar session</a></p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
         {% endblock %}
     </div>
+    <div class="toolbar{% block toolbar-class %}{% endblock %}">
+        {% for console in consoles %}
+        <div class="console_bar"><a href="{% url menubar_console console.1 %}">{{ console.0|capfirst }}</a></div>
+        {% endfor %}
+    </div>
     {% block recommendation %}
+    {% if recomendation %}
+        <div class="recomendation">
+        <span class="title-recomendation"><Recomendaciones></Recomendaciones></span>
+        {% for image in recomendation %}
+            <div class="img_recomendation">
+                <a href="{% url product_game image.id %}">
+                    <img src="{{ MEDIA_URL }}{{ image.url }}">
+                    <span>{{ image.name }}</span>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
     {% endblock %}
-    <div class="content{% block content-class %}{% endblock %}">{% block content %}{% endblock %}</div>
+    <div class ="menubar-category">
+        {% for category in categories %}
+            <div class="category"><a href="{% url page_category category.1 %}">{{ category.0|upper }}</a></div>
+        {% endfor %}
+    </div>
+    <div class="content{% block content-class %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </div>
 </body>
 
 </html>

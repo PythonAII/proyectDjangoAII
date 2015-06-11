@@ -1,6 +1,6 @@
 from ...base import ProductRetriever
-
-PRICESTAGS = ['anterior_ficha texto_amarillo', 'ficha']
+from product.models import GameCategory
+from product import DICT_STOCK, DICT_CATEGORY
 
 
 class XtralifeShopRetriever(ProductRetriever):
@@ -11,14 +11,11 @@ class XtralifeShopRetriever(ProductRetriever):
 
         self.__parse_price_product(blockfiles)
         self.__parse_product_info(prod_info)
-        self.__parse_description(prod_info)
-        #self.__parse_imgs(self.soup.find('div', id='ctl00_CPH_Body_Master_CoverFlow1_tn_list'))
-        return self.product_info, None
+        self.product_info['description'] = prod_info.find('div', 'fichaDescripcion').getText()
+        return self.product_info, self.__parse_imgs(prod_info)
 
     def __parse_product_info(self, prod_info):
-        list_gener = []
-
-        self.product_info['title'] = prod_info.find('h1', 'nombre_ficha').text
+        self.product_info['title'] = prod_info.find('h1', 'nombre_ficha').text.replace(':', '').lower()
         image = prod_info.find('div', 'fichaCabeceraLeft').find_all('img')
         if len(image) is 1:
             self.product_info['src'] = image[0]['src']
@@ -27,29 +24,21 @@ class XtralifeShopRetriever(ProductRetriever):
                 if 'portada' in values['src']:
                     self.product_info['src'] = values['src']
 
-        platform = prod_info.find('div', id='tabs_dispo').find_all('li')
-        for values in platform:
-            self.product_info['platform'] = values.a.getText()
+        self.product_info['platform'] = self._get_code_console(prod_info('li', 'ui-state-active')[0].text.lower())
 
-        self.product_info['publisher'] = prod_info.find('div', 'distribuidores_ficha').a.img['title']
-        generos = prod_info.find('div', 'subcategoriesList').find_all('a')
-
-        for value in generos:
-            list_gener.append(value.getText())
-        self.product_info['genero'] = list_gener
-
-        self.product_info['date'] = None
-        self.product_info['stock'] = prod_info.find('div', 'openPopupStock').getText().strip().split('\n\t')
+        self.product_info['date'] = self._get_date(prod_info.find('div', 'lanz_ficha')
+                                                   .text.replace('\t', '').replace('\n', ''))
+        categories = [category.text.lower() for category in
+                      prod_info.find('span', 'subcategories').find_all('a')]
+        self.product_info['category'] = self._get_code_by(categories, GameCategory, DICT_CATEGORY)
+        self.product_info['stock'] = 3
 
     def __parse_price_product(self, prices):
-        list_price = [prices.find('p', 'precio_%s' % tag) for tag in PRICESTAGS]
-        price = [list_price[index].getText() if list_price[index] else "" for index in xrange(0, 2)]
-        self.product_info['prices'], self.product_info['price_sale'] = self._parse_price(price)
-
-    def __parse_description(self, descriptions):
-        p_description = descriptions.find('div', 'fichaDescripcion')
-        self.product_info['description'] = p_description.p.getText()
+        self.product_info['prices'], self.product_info['price_sale'] = \
+            self._parse_price([prices.find('script').text, prices.find('p', 'precio_ficha').text])
 
     def __parse_imgs(self, imgs):
-        if imgs:
-            list_img = imgs.find_all('a')
+        list_img = imgs.find('div', 'foto_petites')
+        if list_img:
+            return [img['href'] for img in list_img.find_all('a')]
+        return None

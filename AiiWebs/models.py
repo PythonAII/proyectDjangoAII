@@ -1,27 +1,9 @@
+import ast
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User, UserManager
-from product.models import Game, GameManager, PricesGame
-
-
-class GameUser(User):
-
-    visited_games = models.ManyToManyField(Game, verbose_name=_(u'Juegos Visitados'),
-                                           related_name=_(u'Juegos Visitados'), null=True)
-    visited_links = models.ManyToManyField(PricesGame, verbose_name=_(u'Juegos linkeados'))
-    favorite_games = models.ManyToManyField(Game, verbose_name=_(u'Juegos Favoritos'), null=True,
-                                            related_name=_(u'Juegos Favoritos'))
-    favorite_console = models.CharField(max_length=100, verbose_name=_(u'Consola favorita'))
-
-    objects = GameManager()
-
-    class Meta:
-        verbose_name = _(u'Usuario')
-        verbose_name_plural = _(u'Usuarios')
-        ordering = ['username', 'date_joined', 'favorite_console']
-
-    def __unicode__(self):
-        return u'Usuario: %s \nFecha de ingreso: %s' % (self.username, self.date_joined)
+from django.contrib.auth.models import User
+from product.models import Game, GameCategory
+from product import CONSOLE_CHOICE
 
 
 class GameUserQuerySet(models.query.QuerySet):
@@ -42,3 +24,20 @@ class GameUserManager(models.Manager):
 
     def get_query_set(self):
         return GameUserQuerySet(self.model)
+
+class GameUser(User):
+    visited_games = models.ManyToManyField(Game, verbose_name=_(u'Juegos Visitados'),
+                                           related_name=_(u'Juegos Visitados'), null=True)
+    category_visited = models.ManyToManyField(GameCategory, verbose_name=_(u'Categoria visitadas'), null=True)
+    favorite_console = models.IntegerField(choices=CONSOLE_CHOICE, max_length=100, verbose_name=_(u'Consola favorita'))
+    consoles_visited = models.ManyToManyField(Game, verbose_name=_(u'consola Visitados'),
+                                              related_name=_(u'consola Visitados'), null=True)
+    objects = GameUserManager()
+
+    class Meta:
+        verbose_name = _(u'Usuario')
+        verbose_name_plural = _(u'Usuarios')
+        ordering = ['username', 'date_joined', 'favorite_console']
+
+    def __unicode__(self):
+        return u'Usuario: %s \nFecha de ingreso: %s' % (self.username, self.date_joined)

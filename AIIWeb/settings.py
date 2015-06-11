@@ -126,4 +126,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 #URL MEDIA
-MEDIA_ROOT = os.path.join(BASE_DIR, 'AiiWebs/product/game/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'AiiWebs')
+MEDIA_URL = '/media/'

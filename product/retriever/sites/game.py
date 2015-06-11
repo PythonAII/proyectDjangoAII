@@ -22,7 +22,7 @@ class GameShopRetriever(ProductRetriever):
         return self.product_info, imgs
 
     def __parse_product_info(self, product_info):
-        self.product_info['title'] = product_info.find('span', id='ctl00_CPH_Body_Master_lbl_name').text
+        self.product_info['title'] = product_info.find('span', id='ctl00_CPH_Body_Master_lbl_name').text.lower()
         self.product_info['src'] = product_info.find('img', id='ctl00_CPH_Body_Master_img_box')['src']
         platform = product_info.find('div', 'ficha-plataforma-pegi')
         self.product_info['platform'] = \

@@ -41,8 +41,8 @@ class PricesGame(models.Model):
 
     shop = models.CharField(max_length=200, verbose_name=_(u'Tienda'))
     stock = models.IntegerField(choices=STOCK_CHOICE, verbose_name=_(u'Stock'))
-    plataform = models.IntegerField(choices=CONSOLE_CHOICE, max_length=200, verbose_name=_(u'Plataforma'))
-    price_old = models.DecimalField(decimal_places=2, max_digits=5, verbose_name=_(u'Precio Antiguo'))
+    price_old = models.DecimalField(decimal_places=2, max_digits=5, verbose_name=_(u'Precio Antiguo'), blank=True,
+                                    null=True)
     price_now = models.DecimalField(decimal_places=2, max_digits=5, verbose_name=_(u'Precio Actual'))
     url = models.URLField(verbose_name=_(u'url'), unique=True)
     gift = models.CharField(max_length=2000, verbose_name=_(u'Regalo'), null=True)
@@ -59,14 +59,15 @@ class PricesGame(models.Model):
         gift = prices_dict['gift']
         stock = prices_dict['stock']
         shop = prices_dict['shop']['name'].lower()
-        platform = prices_dict['platform']
-        price_old, price_new = prices_dict['prices'], prices_dict['price_sale']
-        self.create_price(shop, stock, platform, price_old, price_new, url, gift)
+        if prices_dict['price_sale']:
+            price_old, price_new = prices_dict['prices'], prices_dict['price_sale']
+        else:
+            price_old, price_new = prices_dict['price_sale'], prices_dict['prices']
+        self.create_price(shop, stock, price_old, price_new, url, gift)
 
-    def create_price(self, shop, stock, platform, price_old, price_new, url, gift):
+    def create_price(self, shop, stock, price_old, price_new, url, gift):
         self.shop = shop
         self.stock = stock
-        self.plataform = platform
         self.price_old = price_old
         self.price_now = price_new
         self.url = url
@@ -78,7 +79,7 @@ class PricesGame(models.Model):
 
 
 def product_image_upload_to(gameimage, filename):
-    path = MEDIA_ROOT + gameimage.name.lower() + u'/'
+    path = MEDIA_ROOT + u'/product/game/' + gameimage.name.lower() + u'/'
     return path + filename[max(0, len(path) + len(filename) - 100):]
 
 
@@ -120,6 +121,11 @@ class GameQuerySet(models.query.QuerySet):
     def is_game(self, game):
         return True if self.get_game(game) else False
 
+    def get_game_release(self):
+        from datetime import datetime
+        now = datetime.now()
+        self.all().order_by('-release_date').values_list('name', 'imagen', 'prices')
+
 
 class GameManager(models.Manager):
 
@@ -158,6 +164,7 @@ class Game(models.Model):
     name = models.CharField(max_length=100, verbose_name=_(u'Nombre'))
     description = models.TextField(max_length=3000, verbose_name=_(u'Descipción'))
     category = models.ManyToManyField(GameCategory, max_length=400, verbose_name=_(u'Categoria'))
+    plataform = models.IntegerField(choices=CONSOLE_CHOICE, max_length=200, verbose_name=_(u'Plataforma'))
     release_date = models.DateTimeField(verbose_name=_(u'Fecha de lanzamiento'), blank=True, null=True)
     prices = models.ManyToManyField(PricesGame, verbose_name=_(u'recommended Price'), blank=True, null=True)
     pegi = models.ManyToManyField(GamePegi, max_length=10000, verbose_name=_(u'Clasificación'), blank=True, null=True)
@@ -179,12 +186,14 @@ class Game(models.Model):
         name = dict_game['title']
         desciption = dict_game['description']
         category = dict_game['category']
+        plataform = dict_game['platform']
         release_date = dict_game['date']
         prices = dict_game['prices']
         imagen = dict_game['imagen']
         pegi = dict_game['pegi']
         imagenes = dict_game['imagenes']
         self.name = name
+        self.plataform = plataform
         self.description = desciption
         self.release_date = release_date
         self.imagen = imagen

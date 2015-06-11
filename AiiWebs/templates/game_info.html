@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content-class %} content-game-info{% endblock %}
+{% block content %}
+<div class="info_game">
+    <img class="main_image" src="{{ MEDIA_URL }}{{ game_info.main }}" title="{{ game_info.name }}">
+    <div class="cabecera_info">
+        <div class="info_title">{{ game_info.name }}</div>
+        <div class="info_category">
+             <p class="text_category">Categorías: </p>
+            {% for category in game_info.category %}
+            <p>{{ category|capfirst }}{% if not forloop.last %}, {% endif %}</p>
+            {% endfor %}
+        </div>
+        <div class="release_info">Lanzamiento: {{ game_info.release_date }}</div>
+        <hr>
+        <div class="description_image"><p>{{ game_info.description }}</p></div>
+    </div>
+    <hr style="float: left;">
+    <div class="prices_info">
+        {% for price in game_info.prices %}
+        <div class="price_info">
+            <div class="brand_info">
+            {% if price.brand %}
+                <img src="{{ MEDIA_URL }}{{ price.brand }}" title="{{ price.name }}">
+            {% else %}
+                {{ price.name }}
+            {% endif %}
+            </div>
+            <div class="price_info_number">
+                {% if price.old != None %}
+                <span class="old-price">
+                    {{ price.old }}
+                </span>
+                {% endif %}
+                <span class="now-price">
+                    {{ price.now }}
+                </span>
+            </div>
+            <a href="{{ price.url }}" target="_blank" style="text-decoration: None">
+                <input class="send-shop" type="submit" value="Ver en Tienda">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% if game_info.imagenes %}
+    <div class="imagenes_info">
+        {% for imagen in game_info.imagenes %}
+        <a href="{{ MEDIA_URL }}{{ imagen }}" target="_blank">
+        <img src="{{ MEDIA_URL }}{{ imagen }}" title="{{ imagen }}" width="300px" height="auto">
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+</diV>
+{% endblock %}

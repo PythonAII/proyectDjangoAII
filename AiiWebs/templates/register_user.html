@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content-class %} content-register{% endblock %}
+{% block content %}
+    <div class="register_user">
+     <form id="register-user" action="{% url register_user %}" method="post">{% csrf_token %}
+        {{ user_form.as_p }}
+        <input class="send" type="submit" value="Enviar">
+     </form>
+    </div>
+{% endblock %}

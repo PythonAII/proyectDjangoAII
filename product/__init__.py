@@ -10,13 +10,13 @@ SHOPS = {
     "pk2": {
         "name": 'Xtralife',
         "url": 'http://www.xtralife.es',
-        "brand": None,
+        "brand": 'xtralife.png',
         "active": True,
     },
     "pk3": {
         "name": 'Tutiendadevideojuegos',
         "url": 'http://tutiendadevideojuegos.com',
-        "brand": None,
+        "brand": 'tutiendadevideojuegos.png',
         "active": True,
     }
     ,
@@ -73,5 +73,8 @@ DICT_CONSOLE = dict((y, x) for x, y in CONSOLE_CHOICE)
 DICT_CATEGORY = dict((y, x) for x, y in CATEGORY_CHOICE)
 DICT_STOCK = dict((y, x) for x, y in STOCK_CHOICE)
 DICT_STOCK[u''] = 4
+DICT_STOCK[u'agotado temporalmente'] = 2
+DICT_STOCK[u'no disponible'] = 2
 DICT_PEGI = dict((y, x) for x, y in PEGI_CHOICE)
 DICT_CATEGORY_MODEL = dict((x, y) for x, y in CATEGORY_CHOICE)
+DICT_CONSOLE_MODEL = dict((x, y) for x, y in CONSOLE_CHOICE)

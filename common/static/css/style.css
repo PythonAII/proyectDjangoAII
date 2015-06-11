@@ -8,7 +8,6 @@
     width: 47%;
     height: 250px;
     float: left;
-    margin-right: -8px;
 }
 
 .header-left span {
@@ -29,14 +28,6 @@
 
 .right-top {
     height: 160px;
-    background: rgba(209,209,209,1);
-    background: -moz-linear-gradient(top, rgba(209,209,209,1) 13%, rgba(205,205,205,1) 33%, rgba(201,201,201,1) 54%, rgba(211,211,211,1) 68%, rgba(235,235,235,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(13%, rgba(209,209,209,1)), color-stop(33%, rgba(205,205,205,1)), color-stop(54%, rgba(201,201,201,1)), color-stop(68%, rgba(211,211,211,1)), color-stop(100%, rgba(235,235,235,1)));
-    background: -webkit-linear-gradient(top, rgba(209,209,209,1) 13%, rgba(205,205,205,1) 33%, rgba(201,201,201,1) 54%, rgba(211,211,211,1) 68%, rgba(235,235,235,1) 100%);
-    background: -o-linear-gradient(top, rgba(209,209,209,1) 13%, rgba(205,205,205,1) 33%, rgba(201,201,201,1) 54%, rgba(211,211,211,1) 68%, rgba(235,235,235,1) 100%);
-    background: -ms-linear-gradient(top, rgba(209,209,209,1) 13%, rgba(205,205,205,1) 33%, rgba(201,201,201,1) 54%, rgba(211,211,211,1) 68%, rgba(235,235,235,1) 100%);
-    background: linear-gradient(to bottom, rgba(209,209,209,1) 13%, rgba(205,205,205,1) 33%, rgba(201,201,201,1) 54%, rgba(211,211,211,1) 68%, rgba(235,235,235,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d1d1d1', endColorstr='#ebebeb', GradientType=0 );
 }
 
 .right-top img {
@@ -47,12 +38,12 @@
 
 .right-bottom {
     margin-top: -7px;
-    background-color: lightgray;
     height: 90px;
 }
 
 .login_field {
     margin-left:10%;
+      margin-bottom: 5px;
 }
 
 #id_password {
@@ -62,20 +53,417 @@
 
 #id_user {
     width: 200px;
-    margin-left: 27px;
+    margin-left: 34px;
 }
 
 .send {
     float:left;
-    margin-left:65px;
+  margin-left: 79px;
+  background-color: rgb(231, 231, 231);
+  padding: 8px;
+  border: None;
 }
 
 #login_user {
-    padding-top: 15px;
-    padding-left: 39%;
+    padding-top: 3px;
+    padding-left: 20%;
+    font-family: sans-serif;
+    color: rgb(124, 119, 119);
 }
 
 .register {
   float: left;
-  margin-left: 127px;
+   margin-left: 151px;
+    font-size: 10px;
+   margin-top: 5px;
 }
+
+.register a {
+      color: rgb(0, 104, 255) !important;
+}
+
+.console_bar {
+  float: left;
+  font-size: 12px;
+  padding: 6px;
+  font-weight: bold;
+  border-radius: 200px 0px 200px 0px;
+  width: 85px;
+  margin-top: 5px;
+  text-align: center;
+  box-shadow: 4px 3px 5px 0px rgba(74,70,74,1);
+  margin-left: 7px;
+}
+
+.console_bar a {
+      color: white !important;
+}
+
+.toolbar {
+    height: 40px;
+    float: left;
+    width: 100%;
+    background: rgba(253, 174, 50, 1);
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif !important;
+}
+
+.console_bar:hover{
+  background: rgb(0, 104, 255);;
+  height: 15px;
+}
+
+.toolbar a:link
+{
+
+ text-decoration:none;
+}
+
+.menubar-category {
+  width: 170px;
+  float: left;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif !important;
+}
+
+.content {
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif !important;
+}
+
+.category{
+  border-radius: 5px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 15px;
+  height: 30px;
+  padding-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border: None;
+  background-color: rgb(253, 174, 50);
+  color: white;
+}
+
+.category a{
+    text-decoration: None;
+    color: inherit;
+}
+
+.category:hover {
+      box-shadow: 1px 1px 5px 1px rgb(3, 3, 3);
+}
+
+.loggin {
+  margin-top: -27px;
+}
+
+.loggin p{
+  padding-top: 25px;
+  padding-left: 40%;
+  font-size: 20px;
+  font-family: sans-serif;
+  height: 92px;
+}
+
+.loggin a {
+    font-size: 10px;
+    margin-left: 10%;
+}
+
+.error_loggin {
+  position: absolute;
+  margin-top: -2%;
+  margin-left: 27%;
+  color: red;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.register_user {
+  position: absolute;
+  margin-left: 215px;
+  margin-top: 325px;
+  border-radius: 5px;
+  border: 1px solid #107ede;
+  box-shadow: 2px 2px 32px 1px rgba(115,134,230,1);
+  padding-left: 33px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  top: 310px;
+  background: rgb(210, 209, 206);
+    margin-bottom: 30px;
+}
+
+.register_user input {
+  width: 250px;
+}
+
+.register_user #id_username {
+    margin-left:175px;
+}
+
+.register_user #id_first_name {
+      margin-left: 205px;
+}
+
+.register_user #id_last_name {
+    margin-left: 247px;
+}
+
+.register_user #id_email {
+    margin-left: 92px;
+}
+
+.register_user #id_password {
+    margin-left: 229px !important;
+    width: 250px !important;
+}
+
+.release {
+  float: left;
+  width: 85%;
+  margin-top: 40px;
+  padding-left: 20px;
+  height: 669px;
+  overflow: auto;
+   margin-bottom: 40px;
+}
+
+.release-left {
+    border-bottom: 1px solid black;
+    float:left;
+    width: 50%;
+}
+
+.release-right {
+  float: left;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  width: 49%;
+}
+
+.release-left img {
+  width: 70px;
+  float: left;
+  max-height: 70px;
+  min-height: 70px;
+}
+
+.brand-release {
+  border-right: 1px solid;
+  height: 70px;
+  width: 90px;
+  float: left;
+}
+
+.brand-release img {
+   width: 50px;
+   margin-left: 10px;
+   margin-top: 5px;
+}
+
+.price-release p {
+    float:left;
+    margin-bottom: 12px
+}
+
+.price-release .old {
+    padding-left: 4px;
+    text-decoration:line-through;
+}
+
+.price-release .new {
+   margin-left: 5px;
+
+}
+
+.release-right span{
+     padding-left: 366px;
+}
+
+.register_user #id_favorite_console {
+    margin-left: 196px;
+}
+
+.register_user .send {
+    margin-left: 0px !important;
+    width: 562px !important;
+}
+
+.ofert {
+    float: left;
+    width: 48%;
+    margin-top: 40px;
+    padding-left: 5px;
+}
+
+.main_image {
+      margin-top: 20px;
+}
+
+.main_image, .cabecera_info {
+    float:left;
+}
+
+.cabecera_info {
+  width: 770px;
+  margin-top: 25px;
+}
+
+.cabecera_info .info_title {
+  font-size: 40px;
+  font-style: italic;
+  font-variant: small-caps;
+  color: rgb(0, 104, 255);
+  font-weight: bold;
+}
+
+.cabecera_info .info_category {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.cabecera_info .info_category p {
+  font-style: italic;
+  float: left;
+}
+
+.cabecera_info .text_category {
+    font-style: normal !important;
+}
+
+.release_info {
+  margin-top: 80px;
+}
+
+.description_image {
+    text-align: justify;
+}
+
+.prices_info {
+  float: left;
+  width: 1074px;
+  border: 1px solid darkgray;
+  height: 120px;
+  padding-top: 25px;
+  position: relative;
+  left: 195px;
+
+}
+
+.price_info {
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: 165px;
+  float: left;
+}
+
+.price_info img {
+    width: 165px;
+    height: 50px;
+}
+
+.price_info .old-price {
+  text-decoration: line-through;
+  margin-right:20px;
+  float: left;
+  font-size: 20px;
+  margin-top: 5px;
+
+}
+
+.price_info_number span {
+    color: red;
+}
+
+.send-shop {
+  margin-top: 7px;
+  width: 165px;
+  background-color: orange;
+  border-radius: 17px;
+  height: 45px;
+  font-size: 20px;
+  font-weight: bold;
+  font-variant: small-caps;
+  cursor: pointer;
+  color:white;
+}
+
+.send-shop:hover {
+     box-shadow: 2px 2px 32px 1px rgb(3, 3, 3);
+    color:black;
+}
+
+.price_info .now-price {
+  float: right;
+  font-size: 28px;
+}
+
+.imagenes_info {
+  float: left;
+  padding-top: 60px;
+  padding-left: 80px;
+  padding-bottom: 60px;
+  width: 1000px;
+  border: 3px solid darkblue;
+  margin-top: 100px;
+  border-radius: 120px;
+  box-shadow: 2px 2px 32px 1px rgb(3, 3, 3);
+  margin-bottom: 100px;
+  position: relative;
+  left: 195px;
+}
+
+.imagenes_info img {
+    float: left;
+}
+
+.error_juego {
+  font-size: 80px;
+  font-weight: bold;
+  font-style: italic;
+    float: left;
+  margin-top: 150px;
+  margin-left: 60px;
+}
+
+.info-game_juego {
+  position: absolute;
+  top: 620px;
+  width: 1080px;
+  left: 200px;
+  overflow: auto;
+  max-height: 2000px;
+  margin-bottom: 30px;
+}
+
+.recomendation {
+  float: left;
+  height: 310px;
+  width: 100%;
+  background: rgba(210, 209, 206, 1);
+}
+
+.title-recomendation {
+  position: absolute;
+  left: 35%;
+  font-size: 60px;
+  color: rgb(0, 104, 255);
+}
+
+.recomendation img {
+    width: 150px;
+    max-height: 185px;
+}
+
+.recomendation a {
+    text-decoration: None;
+}
+
+.img_recomendation {
+    width: 150px;
+    margin-top: 80px;
+    margin-left: 16px;
+    margin-right: 16px;
+    float: left;
+    text-align: center;
+}
+

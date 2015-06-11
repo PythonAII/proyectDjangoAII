@@ -8,40 +8,41 @@ TAGS = [('publisher', 'publisher'), ('category', 'genre'),
 
 DELETE = ['envio digital']
 
-PRICESTAGS = ['PriceInt', 'NoPrice']
+PRICESTAGS = ['our_price_display', 'old_price_display']
 
 DATE_RE = re.compile(ur'(\d+)/(\d+)/(\d+)')
 
 
 class TutiendadevideojuegosShopRetriever(ProductRetriever):
     def parse_detail_url(self):
-        product_info = self.soup.find('div', id='pb-left-column')
-        self.product_info['src'] = product_info.find('img', id='ctl00_CPH_Body_Master_img_box')['src']
-        self.__parse_price_product(self.soup.find('span', 'our_price_display'))
+        product_info = self.soup.find('div', id='primary_block')
+        self.product_info['src'] = product_info.find('img', id='bigpic')['src']
+        self.__parse_price_product(product_info.find('div', 'price'))
         self.__parse_product_info(product_info)
-        self.product_info['description'] = self.soup.find('div', 'yotpo')['data-description']
+        self.product_info['description'] = self.soup.find('div', id='idTab1').p.getText()
         return self.product_info, None
 
     def __parse_product_info(self, product_info):
-        title = ' '.join(product_info.find('h1').text.split()[1:])
-        for text in DELETE:
-            if DELETE in title:
-                title = title.replace(text, u'')[:-1]
+        pb_left_column = product_info.find('div', id='pb-left-column')
+        title = ' '.join(pb_left_column.find('h1').text.lower().split()[1:])
         self.product_info['title'] = title
-        platform = product_info.find('p', 'category_name').text.split()[-1]
+        platform = pb_left_column.find('h1').text.lower().split()[0]
         self.product_info['platform'] = self._get_code_console(platform.lower())
         date = product_info.find('div', id='short_description_content')
         self.product_info['date'] = None
         if date:
-            self.product_info['date'] = self._get_date('/'.join(DATE_RE.findall(date.text)[0]))
+            date = DATE_RE.findall(date.text)
+            if date:
+                self.product_info['date'] = self._get_date('/'.join(date[0]))
         self.product_info['category'] = [12]
-        self.product_info['stock'] = DICT_STOCK[self.product_info['stock'].lower()]
+        self.product_info['stock'] = 3
 
     def __parse_price_product(self, prices):
-        list_price = [prices.find('span', id='ctl00_CPH_Body_Master_ProductPriceView1_Lbl_%s' % tag).getText()
-                      for tag in PRICESTAGS]
-        dec = prices.find('span', id='ctl00_CPH_Body_Master_ProductPriceView1_Lbl_PriceDec')
-        if dec:
-            list_price[0] += u'.%s' % dec.getText()
+        list_price = []
+        for tag in PRICESTAGS:
+            price = prices.find('span', id='%s' % tag)
+            if price:
+                list_price.append(price.text)
+
         self.product_info['prices'], self.product_info['price_sale'] = self._parse_price(list_price)
 

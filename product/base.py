@@ -2,7 +2,7 @@ import re
 from decimal import Decimal
 from bs4 import BeautifulSoup
 from util import get_filename
-
+from django.db.models import Q
 
 class ProductRetriever(object):
 
@@ -12,7 +12,10 @@ class ProductRetriever(object):
         u'ps2': 3,
         u'ps1': 4,
         u'xbox360': 5,
+        u'360': 5,
         u'xbox one': 6,
+        u'xbo': 6,
+        u'xone': 6,
         u'wii': 7,
         u'pc': 8,
         u'ps vita': 9,
@@ -49,7 +52,8 @@ class ProductRetriever(object):
                 code = model.objects.get(name=DICT[name])
                 list_code.append(code)
             else:
-                error.append(name)
+                code = model.objects.get(name=1)
+                list_code.append(code)
         if error:
             pass
             # error
@@ -92,7 +96,16 @@ def save_product(product_info, imgs_no_downloand):
     imgs_downloand = None
     game = None
     try:
-        if not Game.objects.filter(name=product_info['title']).exists():
+        if 'gift' not in product_info:
+            product_info['gift'] = None
+        if 'stock' not in product_info:
+            from product import STOCK_CHOICE
+            product_info['stock'] = STOCK_CHOICE.get('reserva')
+        if 'pegi' not in product_info:
+            product_info['pegi'] = None
+
+        if not Game.objects.filter(Q(name=product_info['title']) &
+                Q(plataform=product_info['platform'])).exists():
             imgs_downloand = []
             if imgs_no_downloand:
                 for img in imgs_no_downloand:
@@ -102,13 +115,6 @@ def save_product(product_info, imgs_no_downloand):
                         image = GameImage(name=product_info['title'])
                         image.save_image(filename, request_imagen.content)
                         imgs_downloand.append(image)
-            if 'gift' not in product_info:
-                product_info['gift'] = None
-            if 'stock' not in product_info:
-                from product import STOCK_CHOICE
-                product_info['stock'] = STOCK_CHOICE.get('reserva')
-            if 'pegi' not in product_info:
-                product_info['pegi'] = None
             product_info['imagenes'] = imgs_downloand if imgs_downloand else None
             img = product_info['src']
             filename = get_filename(img)
@@ -125,16 +131,19 @@ def save_product(product_info, imgs_no_downloand):
             game = Game()
             game.add_game(product_info)
         else:
+
             prices = PricesGame()
             prices.add_price(product_info)
-            game = Game.objects.get(name=product_info)
+            product_info['prices'] = prices
+            game = Game.objects.get(Q(name=product_info['title'])&Q(plataform=product_info['platform']))
             game.prices.add(prices)
     except Exception:
         if prices:
             prices.delete()
         if 'imagen' in product_info:
             product_info['imagen'].delete()
-        for imagen in imgs_downloand:
-            imagen.delete()
+        if imgs_downloand:
+            for imagen in imgs_downloand:
+                imagen.delete()
         if game:
             game.delete()

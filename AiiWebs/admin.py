@@ -6,11 +6,11 @@ from models import GameUser
 
 class GameAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Juegos', {'fields': ['name', 'description', 'category',
+        ('Juegos', {'fields': ['name', 'description', 'category', 'plataform',
                                'release_date', 'prices', 'pegi', 'imagen', 'imagenes']})
     ]
     list_display = ('__unicode__', 'name')
-    list_filter = ['name', 'category__name', 'release_date']
+    list_filter = ['name', 'category__name', 'plataform', 'release_date']
 
 
 class UsersAdmin(admin.ModelAdmin):
@@ -24,12 +24,12 @@ class UsersAdmin(admin.ModelAdmin):
 
 class PricesAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Tienda', {'fields': ['shop', 'plataform', 'url', 'gift']}),
+        ('Tienda', {'fields': ['shop', 'url', 'gift']}),
         ('Precio', {'fields': ['stock', 'price_old', 'price_now']})
     ]
 
-    list_display = ('__unicode__', 'shop', 'plataform', 'stock', 'price_now', 'price_old')
-    list_filter = ['shop', 'plataform', 'stock', 'price_now']
+    list_display = ('__unicode__', 'shop', 'stock', 'price_now', 'price_old')
+    list_filter = ['shop', 'stock', 'price_now']
 
 admin.site.register(PricesGame, PricesAdmin)
 admin.site.register(Game, GameAdmin)
