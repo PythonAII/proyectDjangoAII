@@ -47,10 +47,11 @@ def get_recomendation(user):
                 for game in consoles_visited:
                     if category in game.category.all():
                         recomendation_game.append(game)
+            recomendation_game = set(recomendation_game)
         else:
-            recomendation_game = consoles_visited
+            recomendation_game = set(consoles_visited)
     else:
-        recomendation_game = Game.objects.all().order_by('?')[:7]
+        recomendation_game = set(Game.objects.all().order_by('?'))[:7]
     games = [{'name': game.name.capitalize(), 'id': game.pk,
                   'url': '/'.join(game.imagen.image.url.split('/')[-4:])}
                  for game in recomendation_game]
